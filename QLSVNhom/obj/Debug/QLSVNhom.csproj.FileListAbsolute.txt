@@ -1,0 +1,9 @@
+C:\Users\Atom\Desktop\APPBMCSDL\Lab3_Nhom\QLSVNhom\QLSVNhom\bin\Debug\QLSVNhom.exe.config
+C:\Users\Atom\Desktop\APPBMCSDL\Lab3_Nhom\QLSVNhom\QLSVNhom\bin\Debug\QLSVNhom.exe
+C:\Users\Atom\Desktop\APPBMCSDL\Lab3_Nhom\QLSVNhom\QLSVNhom\bin\Debug\QLSVNhom.pdb
+C:\Users\Atom\Desktop\APPBMCSDL\Lab3_Nhom\QLSVNhom\QLSVNhom\obj\Debug\QLSVNhom.csproj.AssemblyReference.cache
+C:\Users\Atom\Desktop\APPBMCSDL\Lab3_Nhom\QLSVNhom\QLSVNhom\obj\Debug\QLSVNhom.Properties.Resources.resources
+C:\Users\Atom\Desktop\APPBMCSDL\Lab3_Nhom\QLSVNhom\QLSVNhom\obj\Debug\QLSVNhom.csproj.GenerateResource.cache
+C:\Users\Atom\Desktop\APPBMCSDL\Lab3_Nhom\QLSVNhom\QLSVNhom\obj\Debug\QLSVNhom.csproj.CoreCompileInputs.cache
+C:\Users\Atom\Desktop\APPBMCSDL\Lab3_Nhom\QLSVNhom\QLSVNhom\obj\Debug\QLSVNhom.exe
+C:\Users\Atom\Desktop\APPBMCSDL\Lab3_Nhom\QLSVNhom\QLSVNhom\obj\Debug\QLSVNhom.pdb
