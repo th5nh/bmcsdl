@@ -1,0 +1,378 @@
+﻿ -- a)
+ /*-----------------------------------------------------
+	MASV : 21120607
+	HO TEN CAC THANH VIEN NHOM : TRẦN THỊ KIM HUỲNH
+	LAB : 03 - NHOM
+	NGAY :
+
+ ----------------------------------------------------- */
+ -- CAU LENH TAO DB
+
+ -- DROP CONNECTION WITH QLBongDa
+DECLARE @DatabaseName nvarchar(50)
+SET @DatabaseName = N'QLSVNhom'
+
+DECLARE @SQL varchar(max)
+
+SELECT @SQL = COALESCE(@SQL,'') + 'Kill ' + Convert(varchar, SPId) + ';'
+FROM MASTER..SysProcesses
+WHERE DBId = DB_ID(@DatabaseName) AND SPId <> @@SPId
+
+--SELECT @SQL 
+EXEC(@SQL)
+
+-- DROP DATABASE IF QLBongDa has existed
+IF EXISTS (SELECT * FROM sys.databases WHERE name = 'QLSVNhom')
+    DROP DATABASE QLSVNhom;
+GO
+
+CREATE DATABASE QLSVNhom
+GO
+
+USE QLSVNhom
+
+-- b)
+ /*-----------------------------------------------------
+	MASV : 21120607
+	HO TEN CAC THANH VIEN NHOM : TRẦN THỊ KIM HUỲNH
+	LAB : 03 - NHOM
+	NGAY :
+
+ ----------------------------------------------------- */
+ -- CAC CAU LENH TAO TABLE
+
+ CREATE TABLE SINHVIEN (
+	MASV NVARCHAR(20),
+	HOTEN NVARCHAR(100) NOT NULL,
+	NGAYSINH DATETIME,
+	DIACHI NVARCHAR(200),
+	MALOP VARCHAR(20),
+	TENDN NVARCHAR(100) NOT NULL,
+	MATKHAU VARBINARY (MAX) NOT NULL
+
+	PRIMARY KEY (MASV)
+)
+
+CREATE TABLE NHANVIEN (
+	MANV VARCHAR(20),
+	HOTEN NVARCHAR(100) NOT NULL,
+	EMAIL VARCHAR(20),
+	LUONG VARBINARY(MAX),
+	TENDN NVARCHAR(100) NOT NULL,
+	MATKHAU VARBINARY(MAX) NOT NULL,
+	PUBKEY VARCHAR(20)
+
+	PRIMARY KEY (MANV)
+)
+
+CREATE TABLE LOP (
+
+	MALOP VARCHAR(20),
+	TENLOP NVARCHAR(100) NOT NULL,
+	MANV VARCHAR(20)
+
+	PRIMARY KEY (MALOP)
+)
+
+CREATE TABLE HOCPHAN (
+	MAHP VARCHAR(20),
+	TENHP NVARCHAR(100) NOT NULL,
+	SOTC INT 
+	
+	PRIMARY KEY (MAHP)
+)
+
+CREATE TABLE BANGDIEM (
+	MASV VARCHAR(20),
+	MAHP VARCHAR(20),
+	DIEMTHI VARBINARY(MAX) 
+
+	PRIMARY KEY (MASV, MAHP)
+)
+
+GO
+--c)
+ /*-----------------------------------------------------
+	MASV : 21120607
+	HO TEN CAC THANH VIEN NHOM : TRẦN THỊ KIM HUỲNH
+	LAB : 03 - NHOM
+	NGAY :
+
+ ----------------------------------------------------- */
+ -- CAC CAU LENH TAO STORED PROCEDURE
+
+ -- i)
+
+USE QLSVNhom
+IF EXISTS (SELECT * FROM sys.objects WHERE type = 'P' 
+	AND name = 'SP_INS_PUBLIC_NHANVIEN')
+    DROP PROCEDURE SP_INS_PUBLIC_NHANVIEN;
+GO
+
+CREATE PROCEDURE SP_INS_PUBLIC_NHANVIEN 
+    @MANV   VARCHAR(20) ,
+    @HOTEN  NVARCHAR(100),
+    @EMAIL  VARCHAR (20),
+    @LUONGCB    VARCHAR(100),
+    @TENDN  NVARCHAR(100),
+    @MK     VARCHAR(100)
+AS
+BEGIN
+    SET NOCOUNT ON;
+    DECLARE @SQL NVARCHAR(MAX);
+    IF ASYMKEY_ID(@MANV) IS NULL
+    BEGIN
+        SET @SQL = 'CREATE ASYMMETRIC KEY '  + QUOTENAME(@MANV) + ' ' +
+                 'WITH ALGORITHM = RSA_512 ' + 
+                 'ENCRYPTION BY PASSWORD = ' + QUOTENAME(@MK , NCHAR(39))
+        EXEC (@SQL)
+    END
+
+    DECLARE @MATKHAU_SHA1 VARBINARY(MAX);
+    SET @MATKHAU_SHA1 = CONVERT(VARBINARY(MAX),HASHBYTES('SHA1', @MK));
+
+    DECLARE @LUONG_RSA512 VARBINARY(MAX);
+    SET @LUONG_RSA512 = ENCRYPTBYASYMKEY(ASYMKEY_ID(@MANV), @LUONGCB);
+
+    DECLARE @PUBKEY NVARCHAR(20);
+    SELECT @PUBKEY = CONVERT(NVARCHAR(20),@MANV);
+
+    INSERT INTO DBO.NHANVIEN
+    VALUES (@MANV, @HOTEN, @EMAIL, ENCRYPTBYASYMKEY(ASYMKEY_ID(@MANV), @LUONGCB), @TENDN, @MATKHAU_SHA1,@PUBKEY);
+END
+GO
+DELETE FROM NHANVIEN WHERE MANV = 'NV01'
+EXEC SP_INS_PUBLIC_NHANVIEN 'NV01', 'NGUYEN VAN A', 'NVA@',3000000, 'NVA','abcd12'
+select * from NHANVIEN
+
+--RSA_1024 and RSA_512 are deprecated. To use RSA_1024 or RSA_512 (not recommended) you must set the database to database compatibility level 120 or lower.
+ALTER DATABASE QLSVNhom
+SET COMPATIBILITY_LEVEL = 120
+
+
+CREATE ASYMMETRIC KEY TestKey  
+    WITH ALGORITHM = RSA_2048 
+    ENCRYPTION BY PASSWORD = 'abcd12';   
+GO
+
+SELECT  public_key  FROM sys.asymmetric_keys  WHERE name = 'TestKey'
+
+select CAST (ENCRYPTBYASYMKEY(AsymKey_Id('TestKey'), '30000') AS NVARCHAR)
+
+DECLARE @ciphertex VARBINARY(MAX) = ENCRYPTBYASYMKEY(AsymKey_Id('TestKey'), '30000')
+
+select CAST( DECRYPTBYASYMKEY(AsymKey_Id('TestKey'),@ciphertex, N'abcd12') AS VARCHAR)
+
+
+-- ii)
+
+USE QLSVNhom
+IF EXISTS (SELECT * FROM sys.objects WHERE type = 'P' 
+	AND name = 'SP_SEL_PUBLIC_NHANVIEN')
+    DROP PROCEDURE SP_SEL_PUBLIC_NHANVIEN;
+GO
+CREATE PROCEDURE SP_SEL_PUBLIC_NHANVIEN
+    @TENDN  NVARCHAR(100),
+    @MK     VARCHAR(100)
+AS
+BEGIN
+	SELECT nv.MANV, nv.HOTEN, nv.EMAIL, CAST( DECRYPTBYASYMKEY(AsymKey_Id(QUOTENAME(nv.MANV)),nv.LUONG, CAST(@MK AS NVARCHAR)) AS VARCHAR) AS LUONGCB
+	FROM NHANVIEN nv
+	
+END
+GO
+
+EXEC SP_SEL_PUBLIC_NHANVIEN 'NV01', 'abcd12'
+
+
+-- d)
+
+--o Viết script tạo sẵn 2 nhân viên với thông tin chưa được mã hóa (LUONG, MATKHAU)
+--như mô tả trong bảng sau:
+
+EXEC SP_INS_PUBLIC_NHANVIEN 'NV01', 'NGUYEN VAN A', 'nva@yahoo.com',3000000, 'NVA','123456'
+EXEC SP_INS_PUBLIC_NHANVIEN 'NV02', 'NGUYEN VAN B', 'nvb@yahoo.com',2000000, 'NVB','1234567'
+
+select * from NHANVIEN
+
+-----------------------------------------------------------------------------------------------------
+-----------------------------------------------------------------------------------------------------
+-- SCRIPT CỦA CHƯƠNG TRÌNH 
+
+-- Insert fake data LOP
+insert into LOP 
+values ('L01','IT_K20','NVA'),
+       ('L02','Toan_K21','NVA'),
+       ('L03','IT_K19','NVB'),
+       ('L04','Toan_K22','NVB')
+
+
+-- Insert SINHVIEN
+GO
+CREATE PROCEDURE SP_INS_PUBLIC_SINHVIEN
+    @MASV   VARCHAR(20) ,
+    @HOTEN  NVARCHAR(100),
+    @NGAYSINH DATETIME,
+	@DIACHI NVARCHAR(200),
+	@MALOP VARCHAR(20),
+    @TENDN  NVARCHAR(100),
+    @MK     VARCHAR(100)
+AS
+BEGIN
+   
+
+    DECLARE @MATKHAU_SHA1 VARBINARY(MAX);
+    SET @MATKHAU_SHA1 = HASHBYTES('SHA1', @MK);
+
+    INSERT INTO DBO.SINHVIEN
+    VALUES (@MASV, @HOTEN, @NGAYSINH,@DIACHI,@MALOP, @TENDN, @MATKHAU_SHA1);
+END
+GO
+
+EXEC SP_INS_PUBLIC_SINHVIEN 'SV01',N'Nguyễn Lan Anh','07/03/2002',N'Tp.Hồ Chí Minh','L01','DN1','anh@123'
+
+EXEC SP_INS_PUBLIC_SINHVIEN 'SV02',N'Đoàn Đức Mạnh','04/13/2001',N'Long An','L01','DN2','duc@123'
+
+EXEC SP_INS_PUBLIC_SINHVIEN 'SV03',N'Nguyễn Thị Lan','11/23/2002',N'Trà Vinh','L01','DN1','lan@123'
+
+
+EXEC SP_INS_PUBLIC_SINHVIEN 'SV04',N'Đỗ Đức Toàn','05/12/2003',N'Tp.Hồ Chí Minh','L02','DN1','toan@123'
+
+EXEC SP_INS_PUBLIC_SINHVIEN 'SV05',N'Trần Văn Long','06/04/2002',N'Tiền Giang','L02','DN3','long@123'
+
+EXEC SP_INS_PUBLIC_SINHVIEN 'SV06',N'Nguyễn Hải Dương','10/06/2001',N'Tp.Hồ Chí Minh','L02','DN3','duong@123'
+
+
+
+
+EXEC SP_INS_PUBLIC_SINHVIEN 'SV07',N'Võ Đức Tài','07/03/2002',N'Tp.Hồ Chí Minh','L03','DN1','tai@123'
+
+EXEC SP_INS_PUBLIC_SINHVIEN 'SV08',N'Nguyễn Hồng Liên','04/13/2001',N'Long An','L03','DN2','lien@123'
+
+EXEC SP_INS_PUBLIC_SINHVIEN 'SV09',N'Tống Minh Khang','11/23/2002',N'Trà Vinh','L03','DN1','khang@123'
+
+
+EXEC SP_INS_PUBLIC_SINHVIEN 'SV10',N'Đoàn Thế Bảo','05/12/2003',N'Sóc Trăng','L04','DN1','bao@123'
+
+EXEC SP_INS_PUBLIC_SINHVIEN 'SV11',N'Võ Thùy Trâm','06/04/2002',N'Tiền Giang','L04','DN3','tram@123'
+
+EXEC SP_INS_PUBLIC_SINHVIEN 'SV12',N'Đặng Lan Trúc','10/06/2001',N'Đồng Nai','L04','DN3','truc@123'
+
+select * from SINHVIEN
+
+
+INSERT INTO HOCPHAN 
+VALUES ('HP01', N'Mạng máy tính',4)
+
+INSERT INTO HOCPHAN 
+VALUES ('HP02', N'Cấu trúc dữ liệu và giải thuật',4)
+
+INSERT INTO HOCPHAN 
+VALUES ('HP03', N'Bảo mật cơ sở dữ liệu',4)
+
+
+INSERT INTO HOCPHAN 
+VALUES ('HP04', N'Vi tích phân 1B',4)
+
+SELECT * FROM HOCPHAN
+
+INSERT INTO BANGDIEM
+VALUES ('SV01','HP01',NULL),
+	   ('SV01','HP02',NULL),
+	   ('SV01','HP03',NULL),
+	   ('SV01','HP04',NULL),
+	   ('SV02','HP01',NULL),
+	   ('SV02','HP02',NULL),
+	   ('SV02','HP03',NULL),
+	   ('SV02','HP04',NULL),
+       ('SV03','HP01',NULL),
+	   ('SV03','HP02',NULL),
+	   ('SV03','HP03',NULL),
+	   ('SV03','HP04',NULL),
+	   ('SV04','HP01',NULL),
+	   ('SV04','HP02',NULL),
+	   ('SV04','HP03',NULL),
+	   ('SV04','HP04',NULL),
+	   ('SV05','HP01',NULL),
+	   ('SV05','HP02',NULL),
+	   ('SV05','HP03',NULL),
+	   ('SV05','HP04',NULL),
+       ('SV06','HP01',NULL),
+	   ('SV06','HP02',NULL),
+	   ('SV06','HP03',NULL),
+	   ('SV06','HP04',NULL),
+       ('SV07','HP01',NULL),
+	   ('SV07','HP02',NULL),
+	   ('SV07','HP03',NULL),
+	   ('SV07','HP04',NULL),
+       ('SV08','HP01',NULL),
+	   ('SV08','HP02',NULL),
+	   ('SV08','HP03',NULL),
+	   ('SV08','HP04',NULL),
+       ('SV09','HP01',NULL),
+	   ('SV09','HP02',NULL),
+	   ('SV09','HP03',NULL),
+	   ('SV09','HP04',NULL),
+       ('SV10','HP01',NULL),
+	   ('SV10','HP02',NULL),
+	   ('SV10','HP03',NULL),
+	   ('SV10','HP04',NULL),
+       ('SV11','HP01',NULL),
+	   ('SV11','HP02',NULL),
+	   ('SV11','HP03',NULL),
+	   ('SV11','HP04',NULL),
+       ('SV12','HP01',NULL),
+	   ('SV12','HP02',NULL),
+	   ('SV12','HP03',NULL),
+	   ('SV12','HP04',NULL)
+
+
+
+GO
+CREATE PROCEDURE SP_INS_PUBLIC_DIEMTHI
+    @MASV   VARCHAR(20),
+    @TENDN   NVARCHAR(100),
+	@MAHP   VARCHAR(20),
+	@DIEMTHI VARCHAR(20)
+AS
+BEGIN
+   
+
+    DECLARE @MANV VARCHAR(20) 
+	SET @MANV = (SELECT MANV FROM NHANVIEN WHERE TENDN = @TENDN)
+	DECLARE @DIEM_RSA512 VARBINARY(MAX);
+    SET @DIEM_RSA512 = ENCRYPTBYASYMKEY(ASYMKEY_ID(@MANV), @DIEMTHI);
+
+    UPDATE BANGDIEM
+	SET DIEMTHI	 = @DIEM_RSA512 WHERE MASV = @MASV AND  MAHP = @MAHP
+
+END
+GO
+-- Test store procedure
+EXEC SP_INS_PUBLIC_DIEMTHI 'SV01','NVA','HP01','7.5'
+GO
+CREATE PROCEDURE SP_SEL_BANGDIEM
+    @MK     VARCHAR(100),
+	@MASV VARCHAR(20),
+	@TENDN NVARCHAR (100)
+AS
+BEGIN
+    DECLARE @MANV VARCHAR(20) 
+	SET @MANV = (SELECT MANV FROM NHANVIEN WHERE TENDN = @TENDN)
+    SELECT bd.MASV, bd.MAHP, hp.TENHP, CAST( DECRYPTBYASYMKEY(AsymKey_Id(QUOTENAME(@MANV)),bd.DIEMTHI , CAST(@MK AS NVARCHAR)) AS VARCHAR) AS DIEMTHI
+	FROM BANGDIEM bd INNER JOIN HOCPHAN hp ON bd.MAHP = hp.MAHP  
+	WHERE MASV = @MASV
+	
+END
+GO
+-- Test store procedure
+EXEc SP_SEL_BANGDIEM '123456','SV01', 'NVA'
+
+SELECT * FROM LOP
+
+UPDATE LOP
+SET MANV  = 'NV01' WHERE MANV = 'NVA'
+
+UPDATE LOP
+SET MANV  = 'NV02' WHERE MANV = 'NVB'
+

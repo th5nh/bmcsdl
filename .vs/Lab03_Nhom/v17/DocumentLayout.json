@@ -1,0 +1,140 @@
+{
+  "Version": 1,
+  "WorkspaceRootPath": "C:\\BMCSDL_App\\Lab03_Nhom\\",
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{17C8FD92-B51C-44E2-9311-3A8DAAEDD30C}|Lab03_Nhom\\Lab03_Nhom.csproj|C:\\BMCSDL_App\\Lab03_Nhom\\lab03_nhom\\studentdetails.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{17C8FD92-B51C-44E2-9311-3A8DAAEDD30C}|Lab03_Nhom\\Lab03_Nhom.csproj|solutionrelative:lab03_nhom\\studentdetails.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{17C8FD92-B51C-44E2-9311-3A8DAAEDD30C}|Lab03_Nhom\\Lab03_Nhom.csproj|c:\\bmcsdl_app\\lab03_nhom\\lab03_nhom\\studentdetails.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form",
+      "RelativeMoniker": "D:0:0:{17C8FD92-B51C-44E2-9311-3A8DAAEDD30C}|Lab03_Nhom\\Lab03_Nhom.csproj|solutionrelative:lab03_nhom\\studentdetails.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{17C8FD92-B51C-44E2-9311-3A8DAAEDD30C}|Lab03_Nhom\\Lab03_Nhom.csproj|C:\\BMCSDL_App\\Lab03_Nhom\\lab03_nhom\\classmanagement.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{17C8FD92-B51C-44E2-9311-3A8DAAEDD30C}|Lab03_Nhom\\Lab03_Nhom.csproj|solutionrelative:lab03_nhom\\classmanagement.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{17C8FD92-B51C-44E2-9311-3A8DAAEDD30C}|Lab03_Nhom\\Lab03_Nhom.csproj|C:\\BMCSDL_App\\Lab03_Nhom\\lab03_nhom\\loginform.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{17C8FD92-B51C-44E2-9311-3A8DAAEDD30C}|Lab03_Nhom\\Lab03_Nhom.csproj|solutionrelative:lab03_nhom\\loginform.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{17C8FD92-B51C-44E2-9311-3A8DAAEDD30C}|Lab03_Nhom\\Lab03_Nhom.csproj|C:\\BMCSDL_App\\Lab03_Nhom\\lab03_nhom\\insertmark.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{17C8FD92-B51C-44E2-9311-3A8DAAEDD30C}|Lab03_Nhom\\Lab03_Nhom.csproj|solutionrelative:lab03_nhom\\insertmark.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{17C8FD92-B51C-44E2-9311-3A8DAAEDD30C}|Lab03_Nhom\\Lab03_Nhom.csproj|C:\\BMCSDL_App\\Lab03_Nhom\\lab03_nhom\\classmanagement.designer.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{17C8FD92-B51C-44E2-9311-3A8DAAEDD30C}|Lab03_Nhom\\Lab03_Nhom.csproj|solutionrelative:lab03_nhom\\classmanagement.designer.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{17C8FD92-B51C-44E2-9311-3A8DAAEDD30C}|Lab03_Nhom\\Lab03_Nhom.csproj|C:\\BMCSDL_App\\Lab03_Nhom\\lab03_nhom\\insertmark.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form",
+      "RelativeMoniker": "D:0:0:{17C8FD92-B51C-44E2-9311-3A8DAAEDD30C}|Lab03_Nhom\\Lab03_Nhom.csproj|solutionrelative:lab03_nhom\\insertmark.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form"
+    }
+  ],
+  "DocumentGroupContainers": [
+    {
+      "Orientation": 0,
+      "VerticalTabListWidth": 256,
+      "DocumentGroups": [
+        {
+          "DockedWidth": 200,
+          "SelectedChildIndex": 8,
+          "Children": [
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{3ae79031-e1bc-11d0-8f78-00a0c9110057}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{34e76e81-ee4a-11d0-ae2e-00a0c90fffc3}"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
+              "Title": "ClassManagement.Designer.cs",
+              "DocumentMoniker": "C:\\BMCSDL_App\\Lab03_Nhom\\Lab03_Nhom\\ClassManagement.Designer.cs",
+              "RelativeDocumentMoniker": "Lab03_Nhom\\ClassManagement.Designer.cs",
+              "ToolTip": "C:\\BMCSDL_App\\Lab03_Nhom\\Lab03_Nhom\\ClassManagement.Designer.cs",
+              "RelativeToolTip": "Lab03_Nhom\\ClassManagement.Designer.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAIIAAAAUAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-04-22T13:48:37.94Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "InsertMark.cs",
+              "DocumentMoniker": "C:\\BMCSDL_App\\Lab03_Nhom\\Lab03_Nhom\\InsertMark.cs",
+              "RelativeDocumentMoniker": "Lab03_Nhom\\InsertMark.cs",
+              "ToolTip": "C:\\BMCSDL_App\\Lab03_Nhom\\Lab03_Nhom\\InsertMark.cs",
+              "RelativeToolTip": "Lab03_Nhom\\InsertMark.cs",
+              "ViewState": "AQIAAGEAAAAAAAAAAAAwwI8AAAAVAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-04-20T15:59:32.413Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 6,
+              "Title": "InsertMark.cs [Design]",
+              "DocumentMoniker": "C:\\BMCSDL_App\\Lab03_Nhom\\Lab03_Nhom\\InsertMark.cs",
+              "RelativeDocumentMoniker": "Lab03_Nhom\\InsertMark.cs",
+              "ToolTip": "C:\\BMCSDL_App\\Lab03_Nhom\\Lab03_Nhom\\InsertMark.cs [Design]",
+              "RelativeToolTip": "Lab03_Nhom\\InsertMark.cs [Design]",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-04-20T15:58:31.202Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "LoginForm.cs",
+              "DocumentMoniker": "C:\\BMCSDL_App\\Lab03_Nhom\\Lab03_Nhom\\LoginForm.cs",
+              "RelativeDocumentMoniker": "Lab03_Nhom\\LoginForm.cs",
+              "ToolTip": "C:\\BMCSDL_App\\Lab03_Nhom\\Lab03_Nhom\\LoginForm.cs",
+              "RelativeToolTip": "Lab03_Nhom\\LoginForm.cs",
+              "ViewState": "AQIAAB0AAAAAAAAAAAAgwCQAAABGAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-04-20T15:27:02.253Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "ClassManagement.cs",
+              "DocumentMoniker": "C:\\BMCSDL_App\\Lab03_Nhom\\Lab03_Nhom\\ClassManagement.cs",
+              "RelativeDocumentMoniker": "Lab03_Nhom\\ClassManagement.cs",
+              "ToolTip": "C:\\BMCSDL_App\\Lab03_Nhom\\Lab03_Nhom\\ClassManagement.cs",
+              "RelativeToolTip": "Lab03_Nhom\\ClassManagement.cs",
+              "ViewState": "AQIAAE8AAAAAAAAAAAAwwF8AAAAvAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-04-20T14:57:15.796Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "StudentDetails.cs [Design]",
+              "DocumentMoniker": "C:\\BMCSDL_App\\Lab03_Nhom\\Lab03_Nhom\\StudentDetails.cs",
+              "RelativeDocumentMoniker": "Lab03_Nhom\\StudentDetails.cs",
+              "ToolTip": "C:\\BMCSDL_App\\Lab03_Nhom\\Lab03_Nhom\\StudentDetails.cs [Design]",
+              "RelativeToolTip": "Lab03_Nhom\\StudentDetails.cs [Design]",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-04-20T14:56:38.827Z",
+              "EditorCaption": " [Design]"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "StudentDetails.cs",
+              "DocumentMoniker": "C:\\BMCSDL_App\\Lab03_Nhom\\Lab03_Nhom\\StudentDetails.cs",
+              "RelativeDocumentMoniker": "Lab03_Nhom\\StudentDetails.cs",
+              "ToolTip": "C:\\BMCSDL_App\\Lab03_Nhom\\Lab03_Nhom\\StudentDetails.cs",
+              "RelativeToolTip": "Lab03_Nhom\\StudentDetails.cs",
+              "ViewState": "AQIAAIwAAAAAAAAAAAAYwJ8AAAC9AAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-04-20T13:26:06.044Z",
+              "EditorCaption": ""
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
